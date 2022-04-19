@@ -468,15 +468,15 @@ Try {
 			CREATE TABLE geocountry (
 				network_start VARBINARY(16) NOT NULL,
 				network_end VARBINARY(16) NOT NULL,
-				geoname_id INT NOT NULL,
+				geoname_id INT,
 				registered_country_geoname_id INT,
 				represented_country_geoname_id INT,
-				is_anonymous_proxy TINYINT,
-				is_satellite_provider TINYINT,
+				is_anonymous_proxy bool,
+				is_satellite_provider bool,
 				KEY geoname_id (geoname_id),
 				KEY network_start (network_start),
-				PRIMARY KEY network_end (network_end)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+				KEY network_end (network_end)
+			) ENGINE=InnoDB;
 		"
 	} Else {
 		$GCQuery = "
@@ -484,19 +484,19 @@ Try {
 			CREATE TABLE geocity (
 				network_start VARBINARY(16) NOT NULL,
 				network_end VARBINARY(16) NOT NULL,
-				geoname_id INT NOT NULL,
+				geoname_id INT,
 				registered_country_geoname_id INT,
 				represented_country_geoname_id INT,
-				is_anonymous_proxy TINYINT,
-				is_satellite_provider TINYINT,
-				postal_code TINYINT,
-				latitude DECIMAL(7,4),
-				longitude DECIMAL(7,4),
-				accuracy_radius TINYINT,
+				is_anonymous_proxy bool,
+				is_satellite_provider bool,
+				postal_code TEXT,
+				latitude float,
+				longitude float,
+				accuracy_radius int,
 				KEY geoname_id (geoname_id),
 				KEY network_start (network_start),
-				PRIMARY KEY network_end (network_end)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+				KEY network_end (network_end)
+			) ENGINE=InnoDB;
 		"
 	}
 	MySQLQuery $GCQuery
@@ -506,35 +506,35 @@ Try {
 			DROP TABLE IF EXISTS countrylocations;
 			CREATE TABLE countrylocations (
 				geoname_id INT NOT NULL,
-				locale_code TINYTEXT,
-				continent_code TINYTEXT,
-				continent_name TINYTEXT,
-				country_code TINYTEXT,
-				country_name TINYTEXT,
-				is_in_european_union TINYINT,
+				locale_code TEXT NOT NULL,
+				continent_code TEXT NOT NULL,
+				continent_name TEXT NOT NULL,
+				country_iso_code TEXT,
+				country_name TEXT,
+				is_in_european_union bool,
 				KEY geoname_id (geoname_id)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+			) ENGINE=InnoDB;
 		"
 	} Else {
 		$GLQuery = "
 			DROP TABLE IF EXISTS citylocations;
 			CREATE TABLE citylocations (
 				geoname_id INT NOT NULL,
-				locale_code TINYTEXT,
-				continent_code TINYTEXT,
-				continent_name TINYTEXT,
-				country_code TINYTEXT,
-				country_name TINYTEXT,
-				subdivision_1_iso_code TINYTEXT,
-				subdivision_1_name TINYTEXT,
-				subdivision_2_iso_code TINYTEXT,
+				locale_code TEXT NOT NULL,
+				continent_code TEXT NOT NULL,
+				continent_name TEXT NOT NULL,
+				country_iso_code TEXT,
+				country_name TEXT,
+				subdivision_1_iso_code TEXT,
+				subdivision_1_name TEXT,
+				subdivision_2_iso_code TEXT,
 				subdivision_2_name TINYTEXT,
-				city_name TINYTEXT,
-				metro_code TINYINT,
-				time_zone TINYTEXT,
-				is_in_european_union TINYINT,
+				city_name TEXT,
+				metro_code INT,
+				time_zone TEXT,
+				is_in_european_union bool,
 				KEY geoname_id (geoname_id)
-			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+			) ENGINE=InnoDB;
 		"
 	}
 	MySQLQuery $GLQuery
@@ -617,13 +617,10 @@ Try {
 			LOAD DATA INFILE '$strFileLocName'
 			INTO TABLE countrylocations
 			FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '`"' LINES TERMINATED BY '\n' IGNORE 1 ROWS
-			(@geoname_id, @locale_code, @continent_code, @continent_name, @country_iso_code, @country_name, @is_in_european_union)
-			SET
-				geoname_id = NULLIF(@geoname_id, ''), 
-				locale_code = NULLIF(@locale_code, ''), 
-				continent_code = NULLIF(@continent_code, ''), 
-				continent_name = NULLIF(@continent_name, ''), 
-				country_code = NULLIF(@country_iso_code, ''), 
+			(geoname_id, locale_code, continent_code, continent_name, 
+			@country_iso_code, @country_name, @is_in_european_union)
+			SET 
+				country_iso_code = NULLIF(@country_iso_code, ''), 
 				country_name = NULLIF(@country_name, ''), 
 				is_in_european_union = NULLIF(@is_in_european_union, '');
 		"
@@ -632,13 +629,10 @@ Try {
 			LOAD DATA INFILE '$strFileLocName'
 			INTO TABLE citylocations
 			FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '`"' LINES TERMINATED BY '\n' IGNORE 1 ROWS
-			(@geoname_id, @locale_code, @continent_code, @continent_name, @country_iso_code, @country_name, @subdivision_1_iso_code, @subdivision_1_name, @subdivision_2_iso_code, @subdivision_2_name, @city_name, @metro_code, @time_zone, @is_in_european_union)
+			(geoname_id, locale_code, continent_code, continent_name, 
+			@country_iso_code, @country_name, @subdivision_1_iso_code, @subdivision_1_name, @subdivision_2_iso_code, @subdivision_2_name, @city_name, @metro_code, @time_zone, @is_in_european_union)
 			SET 
-				geoname_id = NULLIF(@geoname_id, ''), 
-				locale_code = NULLIF(@locale_code, ''), 
-				continent_code = NULLIF(@continent_code, ''), 
-				continent_name = NULLIF(@continent_name, ''), 
-				country_code = NULLIF(@country_iso_code, ''), 
+				country_iso_code = NULLIF(@country_iso_code, ''), 
 				country_name = NULLIF(@country_name, ''), 
 				subdivision_1_iso_code = NULLIF(@subdivision_1_iso_code, ''), 
 				subdivision_1_name = NULLIF(@subdivision_1_name, ''), 
