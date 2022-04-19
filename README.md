@@ -39,11 +39,11 @@ Run every Wednesday via task scheduler (MaxMinds releases updates on Tuesdays)
 License Key required from MaxMind in order to download data (its free, sign up here: https://www.maxmind.com/en/geolite2/signup)
 
 ## EXAMPLE QUERY
-Returns country_code and country_name for a given IP address from the country database:
+Returns country_iso_code and country_name for a given IP address from the country database:
 
 MySQL	
 ```
-SELECT country_code, country_name
+SELECT country_iso_code, country_name
 FROM (
 	SELECT * 
 	FROM geocountry 
@@ -55,7 +55,7 @@ WHERE network_start <= INET6_ATON('212.186.81.105');
 ```
 
 ```
-SELECT country_code, country_name
+SELECT country_iso_code, country_name
 FROM (
 	SELECT * 
 	FROM geocountry 
