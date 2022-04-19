@@ -512,7 +512,7 @@ Try {
 				country_iso_code TEXT,
 				country_name TEXT,
 				is_in_european_union bool,
-				KEY geoname_id (geoname_id)
+				PRIMARY KEY geoname_id (geoname_id)
 			) ENGINE=InnoDB;
 		"
 	} Else {
@@ -533,7 +533,7 @@ Try {
 				metro_code INT,
 				time_zone TEXT,
 				is_in_european_union bool,
-				KEY geoname_id (geoname_id)
+				PRIMARY KEY geoname_id (geoname_id)
 			) ENGINE=InnoDB;
 		"
 	}
