@@ -492,7 +492,7 @@ Try {
 				postal_code TEXT,
 				latitude float,
 				longitude float,
-				accuracy_radius int,
+				accuracy_radius INT,
 				KEY geoname_id (geoname_id),
 				KEY network_start (network_start),
 				KEY network_end (network_end)
@@ -528,7 +528,7 @@ Try {
 				subdivision_1_iso_code TEXT,
 				subdivision_1_name TEXT,
 				subdivision_2_iso_code TEXT,
-				subdivision_2_name TINYTEXT,
+				subdivision_2_name TEXT,
 				city_name TEXT,
 				metro_code INT,
 				time_zone TEXT,
