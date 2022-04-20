@@ -116,9 +116,9 @@ Function Email ($Email) {
 }
 
 Function EmailResults {
-	Debug "GeoIP update finished"
+	Debug "GeoIP $Type Update Finished"
 	Email " "
-	Email "GeoIP update finish: $(Get-Date -f G)"
+	Email "GeoIP $Type Update Finished: $(Get-Date -f G)"
 	If ($UseHTML) {
 		If ($UseHTML) {Write-Output "</table></body></html>" | Out-File $EmailBody -Encoding ASCII -Append}
 	}
