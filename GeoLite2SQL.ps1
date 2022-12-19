@@ -207,7 +207,7 @@ Function CheckForUpdates {
 	$GitHubVersionTries = 1
 	Do {
 		Try {
-			$GitHubVersion = [decimal](Invoke-WebRequest -UseBasicParsing -Method GET -URI https://raw.githubusercontent.com/palinkas-jo-reggelt/GeoLite2SQL/master/version.txt).Content
+			$GitHubVersion = [decimal](Invoke-WebRequest -UseBasicParsing -Method GET -URI https://raw.githubusercontent.com/RvdHout/GeoLite2SQL/master/version.txt).Content
 			$GetGitHubVersion = $True
 		}
 		Catch {
