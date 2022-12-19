@@ -83,7 +83,7 @@
 		WHERE network_start <= INET6_ATON('2001:67c:28a4::');
 
 .LINK
-	GitHub Repository: https://github.com/palinkas-jo-reggelt/GeoLite2SQL
+	GitHub Repository: https://github.com/RvdHout/GeoLite2SQL
 
 #>
 

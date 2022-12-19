@@ -80,7 +80,7 @@
 		WHERE network_start <= INET6_ATON('2001:67c:28a4::');
 
 .LINK
-	GitHub Repository: https://github.com/palinkas-jo-reggelt/GeoLite2SQL
+	GitHub Repository: https://github.com/RvdHout/GeoLite2SQL
 
 #>
 
@@ -221,11 +221,11 @@ Function CheckForUpdates {
 	}
 	If (($GetGitHubVersion) -and ($GetLocalVersion)) {
 		If ($LocalVersion -lt $GitHubVersion) {
-			Debug "[INFO] Upgrade to version $GitHubVersion available at https://github.com/palinkas-jo-reggelt/GeoLite2SQL"
+			Debug "[INFO] Upgrade to version $GitHubVersion available at https://github.com/RvdHout/GeoLite2SQL"
 			If ($UseHTML) {
-				Email "[INFO] Upgrade to version $GitHubVersion available at <a href=`"https://github.com/palinkas-jo-reggelt/GeoLite2SQL`">GitHub</a>"
+				Email "[INFO] Upgrade to version $GitHubVersion available at <a href=`"https://github.com/RvdHout/GeoLite2SQL`">GitHub</a>"
 			} Else {
-				Email "[INFO] Upgrade to version $GitHubVersion available at https://github.com/palinkas-jo-reggelt/GeoLite2SQL"
+				Email "[INFO] Upgrade to version $GitHubVersion available at https://github.com/RvdHout/GeoLite2SQL"
 			}
 		} Else {
 			Debug "GeoLite2SQL script is latest version: $GitHubVersion"
